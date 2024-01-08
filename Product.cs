@@ -10,7 +10,16 @@ public class Product
 
     public int PublicTypeId { get; set; }
 
-    DateTime DateStocked { get; set; }
+   public DateTime DateStocked { get; set; }
+
+    public int DaysOnShelf
+    {
+        get
+        {
+            TimeSpan timeOnShelf = DateTime.Now - DateStocked;
+            return timeOnShelf.Days;
+        }
+    }
 
 
 }

@@ -31,7 +31,8 @@ List<Product> products = new()
         Name = "Wand of Redemption",
         Price = 75.00m,
         InStock = true,
-        PublicTypeId = 4
+        PublicTypeId = 4,
+        DateStocked = new DateTime(2023, 1, 10)
     },
     new Product()
     {
@@ -39,7 +40,8 @@ List<Product> products = new()
         Name = "Cloak of Featherfall",
         Price = 150.00m,
         InStock = true,
-        PublicTypeId = 1
+        PublicTypeId = 1,
+        DateStocked = new DateTime(2022, 7, 12)
     },
     new Product()
     {
@@ -47,7 +49,8 @@ List<Product> products = new()
         Name = "Skull of the Forgotten",
         Price = 500.00m,
         InStock = true,
-        PublicTypeId = 3
+        PublicTypeId = 3,
+        DateStocked = new DateTime(2023, 3, 21)
     },
     new Product()
     {
@@ -55,7 +58,8 @@ List<Product> products = new()
         Name = "Ring of Invisibility",
         Price = 100.00m,
         InStock = true,
-        PublicTypeId =1
+        PublicTypeId =1,
+        DateStocked = new DateTime(2020, 8, 13)
     },
     new Product()
     {
@@ -63,7 +67,8 @@ List<Product> products = new()
         Name = "Potion of Revivify",
         Price = 300.00m,
         InStock = false,
-        PublicTypeId = 2
+        PublicTypeId = 2,
+        DateStocked = new DateTime(2021, 9, 22)
     },
     new Product()
     {
@@ -71,7 +76,8 @@ List<Product> products = new()
         Name = "Potion of Fire Breath",
         Price = 220.00m,
         InStock = true,
-        PublicTypeId = 2
+        PublicTypeId = 2,
+        DateStocked = new DateTime(2000, 1, 1)
     },
     new Product()
     {
@@ -79,7 +85,8 @@ List<Product> products = new()
         Name = "Wand of Illumination",
         Price = 110.00m,
         InStock = true,
-        PublicTypeId = 4
+        PublicTypeId = 4,
+        DateStocked = new DateTime(2017, 4, 28)
     },
     new Product()
     {
@@ -87,7 +94,8 @@ List<Product> products = new()
         Name = "Helm of the Redeemer",
         Price = 500.00m,
         InStock = false,
-        PublicTypeId = 1
+        PublicTypeId = 1,
+        DateStocked = new DateTime(2014, 6, 25)
     },
     new Product()
     {
@@ -95,7 +103,8 @@ List<Product> products = new()
         Name = "Tenacious Defender",
         Price = 65.00m,
         InStock = true,
-        PublicTypeId = 1
+        PublicTypeId = 1,
+        DateStocked = new DateTime(1987, 8, 13)
     }
 
 };
@@ -115,7 +124,7 @@ void ListProducts()
 
     foreach (Product product in products)
     {
-        Console.WriteLine($"{product.Id}. {product.Name}, Price: ${product.Price}, In Stock: {product.InStock}, Type ID: {product.PublicTypeId} \n");
+        Console.WriteLine($"\t{product.Id}. {product.Name}   Price: ${product.Price}   In Stock: {product.InStock}   Type ID: {product.PublicTypeId}   DaysOnShelf: {product.DaysOnShelf}\n");
     }
     Console.WriteLine($"\n\t~Total Inventory Value: ${totalValue}~\n");
     Console.Write("Press Enter to continue...");
@@ -269,15 +278,28 @@ void ViewByType()
     }
 }
 
-string greeting = "\t\t~~~ R & A Magical Supplies Inventory~~~\n\n";
-string choice = null;
-
-
-Console.WriteLine(greeting);
-
-while (choice != "0")
+void InStockProducts()
 {
-    Console.WriteLine(@"                   Choose An Option:
+    List<Product> inStockProducts = products.Where(p => p.InStock).ToList();
+
+    Console.WriteLine("\n\t\t~~ In Stock Products ~~\n");
+
+    for (int i = 0; i < inStockProducts.Count; i++)
+    {
+        Console.WriteLine($"\n\t{inStockProducts[i].Id}   {inStockProducts[i].Name}   Price: ${inStockProducts[i].Price}   In Stock: {products[i].InStock}   Type ID: {products[i].PublicTypeId}   DaysOnShelf: {products[i].DaysOnShelf}\n");
+    }
+}
+
+string greeting = "\t\t~~~ R & A Magical Supplies Inventory~~~\n\n";
+    string choice = null;
+
+
+    Console.WriteLine(greeting);
+
+
+    while (choice != "0")
+    {
+        Console.WriteLine(@"                   Choose An Option:
 
     0. Exit
 
@@ -290,38 +312,43 @@ while (choice != "0")
     4. Delete A Product
 
     5. View Products by Type
+
+    6. View All In-Stock Products
 ");
-    Console.Write("\t\t Enter Your Selection: ");
+        Console.Write("\t\t Enter Your Selection: ");
 
-    choice = Console.ReadLine();
+        choice = Console.ReadLine();
 
-    switch (choice)
-    {
-        case "0":
-            Environment.Exit(0);
-            break;
+        switch (choice)
+        {
+            case "0":
+                Environment.Exit(0);
+                break;
 
-        case "1":
-            ListProducts();
-            break;
+            case "1":
+                ListProducts();
+                break;
 
-        case "2":
-            AddProduct();
-            break;
+            case "2":
+                AddProduct();
+                break;
 
-        case "3":
-            UpdateProduct();
-            break;
+            case "3":
+                UpdateProduct();
+                break;
 
-        case "4":
-            DeleteProduct();
-            break;
+            case "4":
+                DeleteProduct();
+                break;
 
-        case "5":
-            ViewByType();
-            break;
+            case "5":
+                ViewByType();
+                break;
 
+            case "6":
+                InStockProducts();
+                break;
+
+        }
 
     }
-
-}
